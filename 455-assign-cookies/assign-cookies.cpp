@@ -4,8 +4,8 @@ public:
         ios_base::sync_with_stdio(false);
         cin.tie(NULL);
         cout.tie(NULL);
-        sort(g.begin(), g.end());
-        sort(s.begin(), s.end());
+        ranges::sort(g);
+        ranges::sort(s);
         int count = 0;
         int i=0;
         int j=0;
