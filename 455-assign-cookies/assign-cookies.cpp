@@ -1,6 +1,9 @@
 class Solution {
 public:
     int findContentChildren(vector<int>& g, vector<int>& s) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+        cout.tie(NULL);
         ranges::sort(g);
         ranges::sort(s);
         int count = 0;
