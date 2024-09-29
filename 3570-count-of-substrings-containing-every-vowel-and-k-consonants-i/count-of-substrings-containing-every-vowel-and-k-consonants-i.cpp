@@ -1,22 +1,21 @@
 class Solution {
 public:
-    int countOfSubstrings(string word, int k) {
-        int n = word.size(), ans = 0;
-        for (int start = 0; start < n; start++) {
-            for (int end = start; end < n; end++) {
-                int consonants = 0;
-                bool a = false, e = false, i = false, o = false, u = false;
-                for (int it = start; it <= end; it++) {
-                    if (word[it] == 'a') a = true;
-                    else if (word[it] == 'e') e = true;
-                    else if (word[it] == 'i') i = true;
-                    else if (word[it] == 'o') o = true;
-                    else if (word[it] == 'u') u = true;
-                    else consonants++;
-                }
-                if (a && e && i && o && u && consonants == k) ans++;
+    int countOfSubstrings(string s, int k) {
+        set<char> st = {'a', 'e', 'i', 'o', 'u'};
+        int n = s.size();
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            set<char> stt;
+            int co = 0;
+            for (int j = i; j < n; j++) {
+                if (st.count(s[j]))
+                    stt.insert(s[j]);
+                else
+                    ++co;
+                if (stt.size() == 5 && co == k)
+                    ++res;
             }
         }
-        return ans;
+        return res;
     }
 };
