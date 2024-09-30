@@ -1,42 +1,29 @@
-#include <vector>
-using namespace std;
-
 class CustomStack {
-private:
-    vector<int> stack; 
-    vector<int> increments;
-    int maxSize;
-
 public:
-    CustomStack(int maxSize) : maxSize(maxSize) {
+    int mVec[1000];
+    int size = 0;
+    int currIndex = -1;
 
-    }
+    CustomStack(int maxSize) { size = maxSize; }
 
     void push(int x) {
-        if (stack.size() < maxSize) {
-            stack.push_back(x);
-            increments.push_back(0);
+        if (currIndex < size - 1) {
+            mVec[++currIndex] = x;
         }
     }
 
     int pop() {
-        if (stack.empty()) {
+        if (currIndex < 0) {
             return -1;
         }
-        int index = stack.size() - 1;
-        int value = stack[index] + increments[index];
-        stack.pop_back();
-        increments.pop_back();
-        if (index > 0) {
-            increments[index - 1] += increments[index];
-        }
-        return value;
+        int hold = mVec[currIndex];
+        mVec[currIndex--] = 0;
+        return hold;
     }
 
     void increment(int k, int val) {
-        if (!stack.empty()) {
-            int limit = min(k, (int)stack.size()) - 1;
-            increments[limit] += val;
+        for (int i = 0; i < k && i < size; ++i) {
+            mVec[i] += val;
         }
     }
 };
