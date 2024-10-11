@@ -1,19 +1,27 @@
 class Solution {
 public:
     int smallestChair(vector<vector<int>>& times, int targetFriend) {
+
+        ios_base::sync_with_stdio(0);
+        cin.tie(0);
+        cout.tie(0);
+        
         int n = times.size();
 
         vector<int> order(n);
-        for (int i = 0; i < n; ++i) order[i] = i;
+        for (int i = 0; i < n; ++i)
+            order[i] = i;
 
-        sort(order.begin(), order.end(), [&times](int a, int b) {
-            return times[a][0] < times[b][0];
-        });
+        sort(order.begin(), order.end(),
+             [&times](int a, int b) { return times[a][0] < times[b][0]; });
 
         priority_queue<int, vector<int>, greater<int>> emptySeats;
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> takenSeats;
+        priority_queue<pair<int, int>, vector<pair<int, int>>,
+                       greater<pair<int, int>>>
+            takenSeats;
 
-        for (int i = 0; i < n; ++i) emptySeats.push(i);
+        for (int i = 0; i < n; ++i)
+            emptySeats.push(i);
 
         for (int i : order) {
             int arrival = times[i][0], leave = times[i][1];
@@ -26,11 +34,12 @@ public:
             int seat = emptySeats.top();
             emptySeats.pop();
 
-            if (i == targetFriend) return seat;
+            if (i == targetFriend)
+                return seat;
 
             takenSeats.push({leave, seat});
         }
 
-        return -1;  
+        return -1;
     }
 };
