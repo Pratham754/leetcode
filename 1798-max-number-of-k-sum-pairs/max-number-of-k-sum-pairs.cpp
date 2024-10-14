@@ -1,6 +1,9 @@
 class Solution {
 public:
     int maxOperations(vector<int>& nums, int k) {
+        ios_base::sync_with_stdio(0);
+        cin.tie(0);
+        cout.tie(0);
         int count = 0, i = 0, j = nums.size()-1;
         sort(nums.begin(),nums.end());
         while(i<j){
