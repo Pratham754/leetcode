@@ -1,6 +1,11 @@
 class Solution {
 public:
     bool parseBoolExpr(string expression) {
+
+        ios_base::sync_with_stdio(0);
+        cin.tie(0);
+        cout.tie(0);
+
         stack<char> st;
 
         for (char currChar : expression) {
