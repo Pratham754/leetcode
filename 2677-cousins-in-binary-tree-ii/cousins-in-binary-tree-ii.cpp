@@ -10,6 +10,11 @@
 class Solution {
 public:
     TreeNode* replaceValueInTree(TreeNode* root) {
+       
+        ios_base::sync_with_stdio(0);
+        cin.tie(0);
+        cout.tie(0);
+
         root->val = 0;
         dfs(std::vector<TreeNode*>{root});
         return root;
