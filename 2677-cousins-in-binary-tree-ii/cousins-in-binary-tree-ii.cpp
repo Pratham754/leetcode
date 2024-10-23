@@ -1,52 +1,47 @@
-#include <vector>
-
-// struct TreeNode {
-//     int val;
-//     TreeNode *left;
-//     TreeNode *right;
-//     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-// };
-
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
     TreeNode* replaceValueInTree(TreeNode* root) {
-       
-        ios_base::sync_with_stdio(0);
-        cin.tie(0);
-        cout.tie(0);
-
+        memset(s, 0, sizeof(s));
+        dfs1(root, 0);
         root->val = 0;
-        dfs(std::vector<TreeNode*>{root});
+        dfs2(root, 0);
         return root;
     }
 
 private:
-    void dfs(std::vector<TreeNode*> arr) {
-        if (arr.empty()) return;
-
-        int sum = 0;
-        for (auto node : arr) {
-            if (!node) continue;
-            if (node->left) sum += node->left->val;
-            if (node->right) sum += node->right->val;
+    int s[100010];
+    void dfs1(TreeNode* root, int depth) {
+        if (!root) {
+            return;
         }
+        s[depth] += root->val;
+        dfs1(root->left, depth + 1);
+        dfs1(root->right, depth + 1);
+    };
 
-        std::vector<TreeNode*> childArr;
-        for (auto node : arr) {
-            int curSum = 0;
-            if (node->left) curSum += node->left->val;
-            if (node->right) curSum += node->right->val;
-
-            if (node->left) {
-                node->left->val = sum - curSum;
-                childArr.push_back(node->left);
-            }
-            if (node->right) {
-                node->right->val = sum - curSum;
-                childArr.push_back(node->right);
-            }
+    void dfs2(TreeNode* root, int depth) {
+        int l = root->left ? root->left->val : 0;
+        int r = root->right ? root->right->val : 0;
+        int sub = l + r;
+        ++depth;
+        if (root->left) {
+            root->left->val = s[depth] - sub;
+            dfs2(root->left, depth);
         }
-
-        dfs(childArr);
-    }
+        if (root->right) {
+            root->right->val = s[depth] - sub;
+            dfs2(root->right, depth);
+        }
+    };
 };
