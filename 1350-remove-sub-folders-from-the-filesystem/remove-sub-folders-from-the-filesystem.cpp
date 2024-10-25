@@ -1,6 +1,9 @@
 class Solution {
 public:
     vector<string> removeSubfolders(vector<string>& folder) {
+        ios_base::sync_with_stdio(0);
+        cin.tie(0);
+        cout.tie(0);
         sort(folder.begin(),folder.end());
         vector<string> ans;
         ans.push_back(folder[0]);
