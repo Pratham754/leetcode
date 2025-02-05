@@ -1,15 +1,21 @@
 class RecentCounter {
 private:
-    vector<int> records;
-    int start;
+    deque<int> records;
+    int size = 0;
 
 public:
-    RecentCounter() : start(0) {}
+    RecentCounter() {
+        records.clear();
+    }
     
     int ping(int t) {
         records.push_back(t);
-        while(records[start] < t-3000) start++;
-        return records.size() - start;
+        ++size;
+        while(records.front() < t-3000){
+            records.pop_front();
+            --size;
+        }
+        return size;
     }
 };
 
