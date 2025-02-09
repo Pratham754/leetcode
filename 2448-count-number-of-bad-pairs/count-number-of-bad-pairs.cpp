@@ -1,6 +1,12 @@
 class Solution {
 public:
     long long countBadPairs(vector<int>& nums) {
+        
+        ios_base::sync_with_stdio(0);
+        cin.tie(0);
+        cout.tie(0);
+        
+
         unordered_map<int,int> freq;
         long long goodPairs = 0, n = nums.size();
 
