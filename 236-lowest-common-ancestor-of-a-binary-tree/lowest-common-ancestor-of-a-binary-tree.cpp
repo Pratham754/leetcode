@@ -18,7 +18,7 @@ public:
         root->left = nullptr;
         root->right = nullptr;
 
-        if(left!=NULL && right!=NULL) return root;
-        return left != NULL ? left : right;
+        if(left && right) return root;
+        return left ? left : right;
     }
 };
