@@ -1,6 +1,12 @@
 class Solution {
 public:
     int maximumSum(vector<int>& nums) {
+
+        ios_base::sync_with_stdio(0);
+        cin.tie(0);
+        cout.tie(0);
+        
+
         int maxArr[82] = {0};
         int ans = -1;
         for(int x : nums){
