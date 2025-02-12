@@ -1,15 +1,13 @@
 class Solution {
 public:
-    vector<int>dp;
     int rob(vector<int>& nums) {
-        dp.resize(nums.size(),-1);
-        return robhouse(nums,nums.size()-1);
-    }
-    int robhouse(vector<int>& nums, int i) {
-        if(i<0) return 0;
-        if(dp[i]>=0) return dp[i];
-        int res =  max(robhouse(nums,i-2)+nums[i], robhouse(nums,i-1));
-        dp[i] = res;
-        return res;
+        vector<int>dp(nums.size()+1);
+        dp[0]=0;
+        dp[1] = nums[0];
+        for(int i = 1; i < nums.size(); i++){
+            int val = nums[i];
+            dp[i+1] = max(dp[i],dp[i-1]+val);
+        }
+        return dp[nums.size()];
     }
 };
