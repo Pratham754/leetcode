@@ -1,53 +1,56 @@
 class Solution {
 public:
+
+    bool dfs(int node, vector<vector<int>>& adj, vector<int>& vis, vector<int>& path, int i) {
+        vis[node] = 1;
+        path[node] = i;
+        if (node == 0) return true;
+        for (auto &it : adj[node]) {
+            if (!vis[it]) {
+                if (dfs(it, adj, vis, path, i + 1)) return true;
+            }
+        }
+        path[node] = 0;
+        return false;
+    }
+
+    int dfs2(int node, vector<vector<int>>& adj, vector<int>& vis, vector<int>& path, vector<int>& amount, int i) {
+        vis[node] = 1;
+        int sum = 0;
+        
+        if (path[node]==0 or path[node] > i) {
+            sum += amount[node];
+        } else if (path[node] == i) {
+            sum += amount[node] / 2;
+        }
+        int count = INT_MIN;
+        for (auto it : adj[node]) {
+            if (!vis[it]) {
+                count = max(count, dfs2(it, adj, vis, path, amount, i + 1));
+            }
+        }
+
+        if(count==INT_MIN) count = 0;
+        return sum+count;
+
+        
+    }
+
     int mostProfitablePath(vector<vector<int>>& edges, int bob, vector<int>& amount) {
         int n = amount.size();
-        vector<vector<int>> graph(n);
+        vector<vector<int>> adj(n);
         
         for (auto& edge : edges) {
-            graph[edge[0]].push_back(edge[1]);
-            graph[edge[1]].push_back(edge[0]);
+            adj[edge[0]].push_back(edge[1]);
+            adj[edge[1]].push_back(edge[0]);
         }
-
-        vector<int> bobPath(n, -1);
-        vector<int> path;
         
-        function<bool(int, int)> fillBobPath = [&](int node, int parent) {
-            if (node == 0) return true;
-            
-            for (int neighbor : graph[node]) {
-                if (neighbor != parent) {
-                    path.push_back(node);
-                    if (fillBobPath(neighbor, node)) return true;
-                    path.pop_back();
-                }
-            }
-            return false;
-        };
-
-        fillBobPath(bob, -1);
-        for (int i = 0; i < path.size(); i++) {
-            bobPath[path[i]] = i;
-        }
-
-        function<int(int, int, int, int)> getAliceMaxScore = [&](int node, int parent, int currScore, int timestamp) {
-            if (bobPath[node] == -1 || bobPath[node] > timestamp) {
-                currScore += amount[node];
-            } else if (bobPath[node] == timestamp) {
-                currScore += amount[node] / 2;
-            }
-
-            if (graph[node].size() == 1 && node != 0) return currScore;
-
-            int maxScore = INT_MIN;
-            for (int neighbor : graph[node]) {
-                if (neighbor != parent) {
-                    maxScore = max(maxScore, getAliceMaxScore(neighbor, node, currScore, timestamp + 1));
-                }
-            }
-            return maxScore;
-        };
-
-        return getAliceMaxScore(0, -1, 0, 0);
+        vector<int> path(n, 0);
+        vector<int> visited(n, 0);
+        
+        dfs(bob, adj, visited, path, 1);
+        
+        fill(visited.begin(), visited.end(), 0);
+        return dfs2(0, adj, visited, path, amount, 1);
     }
 };
