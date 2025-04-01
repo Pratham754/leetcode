@@ -1,9 +1,9 @@
 class Solution {
 public:
     long long putMarbles(vector<int>& weights, int k) {
-        if (k == 1) {
-            return 0;
-        }
+        // if (k == 1) {
+        //     return 0;
+        // }
 
         vector<int> pair_sums;
         for (size_t i = 0; i < weights.size() - 1; ++i) {
